@@ -378,16 +378,21 @@ Node *ThreadedBST::remove(Node *subHead, int valToRem) {
 
       // find a largest node on left side (so it won't have a right ptr) and
       // make it the head
-      Node *currentNode = headPtr->leftPtr;
-      while ((currentNode->rightPtr)) {
-        currentNode = currentNode->rightPtr;
+      Node *largest = headPtr->leftPtr;
+      Node *largestParent = nullptr;
+
+      while ((largest->rightPtr)) {
+        largestParent = largest;
+        largest = largest->rightPtr;
+      }
+      if (largestParent) {
+        largestParent->rightPtr = largest->leftPtr;
+        largest->leftPtr = returnNode->leftPtr;
       }
 
-      /*headPtr = currentNode;
-      currentNode->rightPtr = returnNode->rightPtr;
-      currentNode->rightThread = returnNode->rightThread;*/
-      headPtr = remove(returnNode->leftPtr, currentNode->value);
-      headPtr->rightPtr = returnNode->rightPtr;
+      headPtr = largest;
+      largest->rightPtr = returnNode->rightPtr;
+      largest->rightThread = returnNode->rightThread;
 
     } else {                           // Single child case.
       if (nodeToRemChildCount == -1) { // Single-left child case.
@@ -443,7 +448,24 @@ Node *ThreadedBST::remove(Node *subHead, int valToRem) {
         subHead->rightThread = nextNode->rightThread;
 
       } else if (nodeToRemChildCount == 2) { // Double-children case.
-        subHead->leftPtr = remove(nextNode->rightThread, valToRem);
+        //subHead->leftPtr = remove(nextNode->rightThread, valToRem);
+              // find a largest node on left side (so it won't have a right ptr) and
+        // make it the head
+        Node *largest = subHead->leftPtr;
+        Node *largestParent = nullptr;
+
+        while ((largest->rightPtr)) {
+          largestParent = largest;
+          largest = largest->rightPtr;
+        }
+        if (largestParent) {
+          largestParent->rightPtr = largest->leftPtr;
+          largest->leftPtr = subHead->leftPtr;
+        }
+
+        largest->rightPtr = subHead->rightPtr;
+        largest->rightThread = subHead->rightThread;
+        subHead = largest;
 
       } else {                           // Single child case.
         if (nodeToRemChildCount == -1) { // Single-left child case.

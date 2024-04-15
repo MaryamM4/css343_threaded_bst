@@ -29,7 +29,7 @@ void test1() {
  * with a tree of size 4.
  */
 void test2() {
-  int n = 8;
+  int n = 4;
   ThreadedBST origTree(n);
   ThreadedBST newTree = origTree;
 
