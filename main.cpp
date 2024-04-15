@@ -12,14 +12,16 @@ void test1() {
   ThreadedBST origTree(n);
   ThreadedBST newTree = origTree;
 
+  std::cout << std::endl;
   // Remove all evens from newTree (copy).
   for (int i = 2; i < n + 1; i += 2) {
+    std::cout << "remove(" << i << ")" << std::endl;
     newTree.remove(i);
   }
 
   // Output (to compare before/after deletions).
-  cout << "Original Tree: " << origTree << endl;
-  cout << "New Tree: " << newTree << endl << endl;
+  cout << "\nOriginal Tree: \n" << origTree << endl;
+  cout << "New Tree: \n" << newTree << endl << endl;
 }
 
 /**
@@ -27,18 +29,31 @@ void test1() {
  * with a tree of size 4.
  */
 void test2() {
-  int n = 4;
+  int n = 8;
   ThreadedBST origTree(n);
   ThreadedBST newTree = origTree;
 
+  std::cout << std::endl;
   // Remove all evens from newTree (copy).
   for (int i = 2; i < n + 1; i += 2) {
+    std::cout << "remove(" << i << ")" << std::endl;
     newTree.remove(i);
   }
 
   // Output (to compare before/after deletions).
-  cout << "Original Tree: " << origTree << endl;
-  cout << "New Tree: " << newTree << endl << endl;
+  cout << "\nOriginal Tree: \n" << origTree << endl;
+  cout << "New Tree: \n" << newTree << endl << endl;
+}
+
+/**
+ * Style helper. Prints:
+ * <empty line>
+ * <line>
+ * <str>
+ * <line>
+ */
+void printHeader(std::string str, std::string line) {
+  std::cout << "\n" << line << "\n" << str << "\n" << line << std::endl;
 }
 
 /**
@@ -46,7 +61,10 @@ void test2() {
  * Run all tests.
  */
 int main() {
+  printHeader("TEST 1", "================");
   test1();
+
+  printHeader("TEST 2", "================");
   test2();
 
   return 0;
